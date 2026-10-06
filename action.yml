@@ -12,7 +12,15 @@ runs:
         podman machine init
         podman machine start
     - name: Install Podman
-      if: runner.os == 'macOS'
+      if: runner.os == 'macOS' && runner.arch == 'X64'
+      shell: bash
+      run: |
+        brew install --build-from-source docker podman
+        sudo podman-mac-helper install
+        podman machine init
+        podman machine start
+    - name: Install Podman
+      if: runner.os == 'macOS' && runner.arch == 'ARM64'
       shell: bash
       run: |
         brew install docker podman
